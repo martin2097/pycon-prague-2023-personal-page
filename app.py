@@ -13,6 +13,7 @@ from utils import navigacny_panel
 import dash_mantine_components as dmc
 
 app = Dash(__name__, use_pages=True)
+server = app.server
 
 links = {
     "o-mne": {"label": "O mne"},
@@ -81,4 +82,4 @@ clientside_callback(
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
