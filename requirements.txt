@@ -3,6 +3,6 @@ dash_ag_grid==2.3.0
 dash_iconify==0.1.2
 dash_mantine_components==0.12.1
 numpy
-pandas==2.1.0
+pandas
 plotly==5.16.1
 gunicorn
