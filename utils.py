@@ -1,6 +1,7 @@
 import dash_mantine_components as dmc
 from dash import dcc, html
 from dash_iconify import DashIconify
+import pandas as pd
 
 
 def responzivny_stlpec_uprostred(obsah):
@@ -135,3 +136,27 @@ def navigacny_panel(odkazy, logo):
         style={"margin-bottom": "3px"},
         withBorder=False,
     )
+
+
+def priprava_dat():
+    df = pd.read_csv("sldb2021_vzdelani_vek2_pohlavi_iba_kraje.csv")
+
+    vzdelanie_mapovanie = {
+        "Bez vzdělání": "Iné",
+        "Nezjištěno": "Iné",
+        "Neúplné základní vzdělání": "Základné",
+        "Nižší střední a střední vzdělání": "SŠ (bez maturity)",
+        "Nástavbové vzdělání": "Stredoškolské",
+        "Pomaturitní studium": "Stredoškolské",
+        "Vysokoškolské bakalářské vzdělání": "Vysokoškolské",
+        "Vysokoškolské doktorské vzdělání": "Vysokoškolské",
+        "Vysokoškolské magisterské vzdělání": "Vysokoškolské",
+        "Vyšší odborné vzdělání": "Stredoškolské",
+        "Vyšší odborné vzdělání v konzervatoři": "Stredoškolské",
+        "Základní vzdělání": "Základné",
+        "Úplné střední odborné vzdělání": "Stredoškolské",
+        "Úplné střední všeobecné vzdělání": "Stredoškolské",
+    }
+
+    df.replace({"vzdelani_txt": vzdelanie_mapovanie}, inplace=True)
+    return df

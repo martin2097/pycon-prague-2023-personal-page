@@ -1,44 +1,20 @@
 import pandas as pd
 from dash import register_page, callback, Input, Output, State, dcc, html
 import dash_mantine_components as dmc
-from utils import responzivny_stlpec_uprostred
+from utils import responzivny_stlpec_uprostred, priprava_dat
 from plotly.express import bar
 import dash_ag_grid as dag
 import numpy as np
 
 register_page(__name__)
 
-df = pd.read_csv("sldb2021_vzdelani_vek2_pohlavi_iba_kraje.csv")
-df = df[
-    (df["uzemi_txt"].isin(["Česká republika", "Kraj Vysočina", "Hlavní město Praha"]))
-    | (df["uzemi_txt"].str.contains("kraj$"))
-]
-df = df[df["pohlavi_txt"].isin(["muž", "žena"])]
-
-vzdelanie_mapovanie = {
-    "Bez vzdělání": "Iné",
-    "Nezjištěno": "Iné",
-    "Neúplné základní vzdělání": "Základné",
-    "Nižší střední a střední vzdělání": "SŠ (bez maturity)",
-    "Nástavbové vzdělání": "Stredoškolské",
-    "Pomaturitní studium": "Stredoškolské",
-    "Vysokoškolské bakalářské vzdělání": "Vysokoškolské",
-    "Vysokoškolské doktorské vzdělání": "Vysokoškolské",
-    "Vysokoškolské magisterské vzdělání": "Vysokoškolské",
-    "Vyšší odborné vzdělání": "Stredoškolské",
-    "Vyšší odborné vzdělání v konzervatoři": "Stredoškolské",
-    "Základní vzdělání": "Základné",
-    "Úplné střední odborné vzdělání": "Stredoškolské",
-    "Úplné střední všeobecné vzdělání": "Stredoškolské",
-}
-
-df.replace({"vzdelani_txt": vzdelanie_mapovanie}, inplace=True)
+df = priprava_dat()
 
 
-def stat_card(id, label):
+def karta_statistiky(id, popis):
     return dmc.Card(
         dmc.Stack(
-            [dmc.Text(label, weight=600, size=15), dmc.Text(id=id)],
+            [dmc.Text(popis, weight=600, size=15), dmc.Text(id=id)],
             align="center",
             spacing="xs",
         ),
@@ -72,16 +48,16 @@ layout = responzivny_stlpec_uprostred(
                 [
                     dmc.Col(
                         [
-                            stat_card(
-                                id="pocet-obyvatel", label="Celkový počet obyvateľov"
+                            karta_statistiky(
+                                id="pocet-obyvatel", popis="Celkový počet obyvateľov"
                             )
                         ],
                         sm=6,
                     ),
                     dmc.Col(
                         [
-                            stat_card(
-                                id="podiel-vs", label="Podiel vysokoškolsky vzdelaných"
+                            karta_statistiky(
+                                id="podiel-vs", popis="Podiel vysokoškolsky vzdelaných"
                             )
                         ],
                         sm=6,
@@ -125,7 +101,7 @@ layout = responzivny_stlpec_uprostred(
     Output("podiel-vs", "children"),
     Input("vyber-uzemi", "value"),
 )
-def pocet_obyvatelov(uzemie):
+def plnenie_kariet(uzemie):
     pocet = df[df["uzemi_txt"] == uzemie]["hodnota"].sum()
     podiel = (
         df[(df["uzemi_txt"] == uzemie) & (df["vzdelani_txt"] == "Vysokoškolské")][
