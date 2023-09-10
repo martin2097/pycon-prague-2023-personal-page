@@ -1,48 +1,8 @@
 from dash import register_page, html
 import dash_mantine_components as dmc
-from utils import responzivny_stlpec_uprostred
+from utils import responzivny_stlpec_uprostred, karta_projekt
 
 register_page(__name__)
-
-
-def karta_projekt(image, title, description, odkaz):
-    return dmc.Card(
-        children=[
-            dmc.CardSection(
-                dmc.Image(
-                    src=image,
-                    height=160,
-                )
-            ),
-            dmc.Stack(
-                [
-                    dmc.Text(title, weight=500),
-                    dmc.Text(
-                        description,
-                        size="sm",
-                        color="dimmed",
-                        style={"height": "65px"},
-                    ),
-                    dmc.Anchor(
-                        dmc.Button(
-                            "Navštíviť projekt",
-                            variant="light",
-                            fullWidth=True,
-                            mt="md",
-                            radius="md",
-                        ),
-                        href=odkaz,
-                    ),
-                ],
-                spacing=5,
-                mt=5,
-            ),
-        ],
-        withBorder=True,
-        shadow="sm",
-        radius="md",
-        style={"height": "330px"},
-    )
 
 
 layout = responzivny_stlpec_uprostred(

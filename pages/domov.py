@@ -1,17 +1,8 @@
 from dash import register_page
 import dash_mantine_components as dmc
-from utils import responzivny_stlpec_uprostred
+from utils import responzivny_stlpec_uprostred, gradient_text
 
 register_page(__name__, path="/")
-
-
-def gradient_text(text, **kwargs):
-    return dmc.Text(
-        text,
-        variant="gradient",
-        gradient={"from": "blue", "to": "teal", "deg": 45},
-        **kwargs
-    )
 
 
 layout = responzivny_stlpec_uprostred(

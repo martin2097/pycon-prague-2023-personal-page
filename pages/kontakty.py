@@ -1,25 +1,9 @@
 from dash import register_page, html
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
-from utils import responzivny_stlpec_uprostred
+from utils import responzivny_stlpec_uprostred, ikona_s_odkazom
 
 register_page(__name__)
-
-
-def ikona_s_odkazom(odkaz, ikona):
-    return html.A(
-        dmc.ActionIcon(
-            DashIconify(
-                icon=ikona,
-                width=30,
-            ),
-            size="lg",
-            variant="transparent",
-        ),
-        href=odkaz,
-        target="_blank",
-    )
-
 
 layout = responzivny_stlpec_uprostred(
     dmc.Center(

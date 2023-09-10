@@ -1,7 +1,7 @@
 import pandas as pd
 from dash import register_page, callback, Input, Output, State, dcc, html
 import dash_mantine_components as dmc
-from utils import responzivny_stlpec_uprostred, priprava_dat
+from utils import responzivny_stlpec_uprostred, priprava_dat, stylizuj_graf
 from plotly.express import bar
 import dash_ag_grid as dag
 import numpy as np
@@ -140,37 +140,7 @@ def data_do_grafu(uzemie, timestamp, theme):
         },
     )
 
-    fig.update_traces(
-        marker_color="rgb(207,219,137)",
-        hovertemplate="%{x}<br>%{y:,.0f} obyvateľov<br>%{customdata[0]:.2%} obyvateľstva",
-    )
-
-    fig.update_layout(
-        height=300,
-        yaxis_title=None,
-        xaxis_title=None,
-        dragmode=False,
-        bargap=0.4,
-        yaxis=dict(
-            gridcolor="whitesmoke" if theme["colorScheme"] == "light" else "#484848",
-            gridwidth=0.2,
-            zeroline=False,
-            color="#444" if theme["colorScheme"] == "light" else "#FFFFFF",
-            nticks=5,
-        ),
-        paper_bgcolor="rgba(0, 0, 0, 0)",
-        font=dict(
-            family="Segoe UI",
-            size=14,
-        ),
-        margin=dict(r=0, b=10, t=0, l=0),
-        plot_bgcolor="rgba(0, 0, 0, 0)",
-        xaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            color="#444" if theme["colorScheme"] == "light" else "#FFFFFF",
-        ),
-    )
+    fig = stylizuj_graf(fig, theme["colorScheme"])
     return fig
 
 

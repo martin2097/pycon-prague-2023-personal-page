@@ -1,6 +1,6 @@
 from dash import register_page
 import dash_mantine_components as dmc
-from utils import responzivny_stlpec_uprostred
+from utils import responzivny_stlpec_uprostred, vytvor_akordeon
 
 register_page(__name__)
 
@@ -64,59 +64,6 @@ vzdelanie = [
         ],
     },
 ]
-
-
-def vytvor_nazov_akordeonu(nazov, logo, popis):
-    return dmc.AccordionControl(
-        dmc.Grid(
-            [
-                dmc.Col(
-                    [
-                        dmc.Avatar(src=logo, radius="xl", size="lg"),
-                    ],
-                    span="content",
-                ),
-                dmc.Col(
-                    [
-                        dmc.Text(nazov),
-                        dmc.Text(popis, size="sm", weight=400, color="dimmed"),
-                    ],
-                    span="auto",
-                ),
-            ]
-        )
-    )
-
-
-def vytvor_obsah_akordeonu(list_s_obsahom):
-    return dmc.AccordionPanel(
-        dmc.List(
-            [
-                dmc.ListItem(dmc.Text([dmc.Text(obsah, size="sm")]))
-                for obsah in list_s_obsahom
-            ],
-            pl=10,
-            pr=30,
-            pb=10,
-        )
-    )
-
-
-def vytvor_akordeon(data_pre_akordeon):
-    return [
-        dmc.AccordionItem(
-            [
-                vytvor_nazov_akordeonu(
-                    jedna_polozka["nazov"],
-                    jedna_polozka["logo"],
-                    jedna_polozka["popis"],
-                ),
-                vytvor_obsah_akordeonu(jedna_polozka["obsah"]),
-            ],
-            value=jedna_polozka["id"],
-        )
-        for jedna_polozka in data_pre_akordeon
-    ]
 
 
 layout = responzivny_stlpec_uprostred(
